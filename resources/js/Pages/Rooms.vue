@@ -1,6 +1,17 @@
 <script setup>
-import { useForm } from '@inertiajs/vue3';
-import { onMounted } from 'vue'
+import { Link, useForm, usePage } from '@inertiajs/vue3';
+import { computed } from 'vue';
+import dayjs from 'dayjs';
+import relativeTime from "dayjs/plugin/relativeTime";
+dayjs.extend(relativeTime)
+
+const page = usePage()
+
+const user = computed(() => page.props.auth.user)
+
+const props = defineProps({
+    rooms: Array
+})
 
 const form = useForm({
     name: '',
@@ -11,25 +22,21 @@ const joinRoom = () => {
     form.post(route('rooms.store'))
 }
 
-onMounted(() => {
-    Echo.join(`rooms.25`)
-        .here((users) => {
-            console.log(users);
-        })
-        .joining((user) => {
-            console.log(user);
-        })
-})
-
 </script>
 <template>
     <div class="relative min-h-screen flex flex-col items-center justify-center">
         <div class="relative w-full max-w-2xl mx-auto px-6">
 
             <div class="block w-full p-6 border rounded-lg shadow  bg-gray-800 border-gray-700">
+                <h1 class="mb-4 text-center text-4xl font-extrabold leading-none tracking-tight md:text-5xl lg:text-6xl text-white">
+                    Hi <span class="text-primary-500">{{ user.username }}</span>
+                </h1>
 
                 <form @submit.prevent="joinRoom">
-                    <div class="flex items-center max-w-sm mx-auto" >
+                    <p v-if="form.errors.name" class="mt-2 text-center text-sm text-red-500">
+                        {{ form.errors.name }}
+                    </p>
+                    <div class="mt-2 flex items-center max-w-sm mx-auto" >
                         <label for="simple-search" class="sr-only">Search</label>
                         <div class="relative w-full">
                             <input
@@ -44,9 +51,7 @@ onMounted(() => {
                             <span>Create/Join</span>
                         </button>
                     </div>
-                    <p v-if="form.errors.name" class="mt-2 text-center text-sm text-red-600 dark:text-red-500">
-                        {{ form.errors.name }}
-                    </p>
+
                     <div class="mt-2 flex items-center max-w-sm mx-auto" >
                         <div class="flex items-center mb-4">
                             <input id="default-checkbox" type="checkbox" v-model="form.hidden" class="w-4 h-4 text-primary-600   rounded focus:ring-primary-600 ring-offset-gray-800 focus:ring-2 bg-gray-700 border-gray-600">
@@ -57,6 +62,23 @@ onMounted(() => {
 
             </div>
 
+
+            <div class="block mt-2 w-full p-6 border rounded-lg shadow  bg-gray-800 border-gray-700">
+                <h1 class="mb-4 text-center text-4xl font-extrabold leading-none tracking-tight md:text-5xl lg:text-6xl text-white">
+                    <span class="text-primary-500">Public</span> Rooms.
+                </h1>
+
+                <div class="mt-2 w-full text-sm font-medium border rounded-lg bg-gray-700 border-gray-600 text-white">
+                    <Link v-for="(room, index) in props.rooms" :href="route('rooms.show', room.name)" :class="{'rounded-t-lg': index == 0, 'rounded-b-lg' : index == (props.rooms.length - 1)}"
+                        class="flex justify-between w-full px-4 py-2 border-b cursor-pointer focus:outline-none focus:ring-2 border-gray-600 hover:bg-gray-600 hover:text-white focus:ring-gray-500 focus:text-white"
+                    >
+                        <div>{{ room.name }}</div> <div>expired {{ dayjs().to(dayjs(room.expired_at)) }}</div>
+                    </Link>
+                    <div v-if="props.rooms.length == 0" class="flex text-gray-500 justify-center w-full px-4 py-2 rounded-y-lg cursor-pointer  border-gray-600">
+                        <div> No public room available right now.</div>
+                    </div>
+                </div>
+            </div>
 
         </div>
     </div>

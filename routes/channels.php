@@ -8,4 +8,4 @@ Broadcast::channel('App.Models.User.{id}', function ($user, $id) {
 });
 
 
-Broadcast::channel('rooms.{roomId}', RoomChannel::class, ['guards' => ['web', 'broadcasting']]);
+Broadcast::channel('rooms.{roomId}', RoomChannel::class, ['guards' => ['web', 'no-auth']]);

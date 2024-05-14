@@ -22,7 +22,7 @@ class AppServiceProvider extends ServiceProvider
      */
     public function boot(): void
     {
-        Auth::viaRequest('custom-auth', function ($request) {
+        Auth::viaRequest('no-auth', function ($request) {
             if ($user = $request->session()->get('no-auth')) {
 
                 return new CustomAuth($user);

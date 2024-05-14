@@ -40,8 +40,8 @@ return [
             'driver' => 'session',
             'provider' => 'users',
         ],
-        'broadcasting' => [
-            'driver' => 'custom-auth',
+        'no-auth' => [
+            'driver' => 'no-auth',
         ],
     ],
 

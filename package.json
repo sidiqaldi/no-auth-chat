@@ -19,6 +19,8 @@
     "dependencies": {
         "@inertiajs/vue3": "^1.0.16",
         "@vitejs/plugin-vue": "^5.0.4",
+        "dayjs": "^1.11.11",
+        "vue-virtual-scroller": "^2.0.0-beta.8",
         "vue3-chat-scroll": "^0.2.0"
     }
 }

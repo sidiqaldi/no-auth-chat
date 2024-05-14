@@ -19,9 +19,9 @@ class RoomController extends Controller
 
     public function index()
     {
-        $roomList = $this->roomManager->getRooms();
+        $rooms = $this->roomManager->getRooms();
 
-        return Inertia::render('Rooms', compact('roomList'));
+        return Inertia::render('Rooms', compact('rooms'));
     }
 
     public function store(Request $request)

@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\ChatController;
 use App\Http\Controllers\HandleNotAuthController;
 use App\Http\Controllers\RoomController;
 use App\Http\Middleware\HandleInertiaRequests;
@@ -11,6 +12,8 @@ Route::middleware(HandleInertiaRequests::class)->group(function() {
         Route::get('/', [RoomController::class, 'index'])->name('rooms');
 
         Route::resource('/rooms', RoomController::class)->only('store', 'show');
+
+        Route::post('/chat', ChatController::class)->name('chat.send');
     });
 
     Route::resource('/setup', HandleNotAuthController::class)->only('index', 'store');
