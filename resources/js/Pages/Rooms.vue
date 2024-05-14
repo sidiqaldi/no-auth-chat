@@ -28,8 +28,8 @@ const joinRoom = () => {
         <div class="relative w-full max-w-2xl mx-auto px-6">
 
             <div class="block w-full p-6 border rounded-lg shadow  bg-gray-800 border-gray-700">
-                <h1 class="mb-4 text-center text-4xl font-extrabold leading-none tracking-tight md:text-5xl lg:text-6xl text-white">
-                    Hi <span class="text-primary-500">{{ user.username }}</span>
+                <h1 class="mb-4 text-center text-2xl font-extrabold leading-none tracking-tight md:text-3xl lg:text-4xl text-white">
+                    Hi <span class="text-primary-500">{{ user.username }}</span><small class="text-gray-400">#{{ user.id }}</small>
                 </h1>
 
                 <form @submit.prevent="joinRoom">
@@ -64,7 +64,7 @@ const joinRoom = () => {
 
 
             <div class="block mt-2 w-full p-6 border rounded-lg shadow  bg-gray-800 border-gray-700">
-                <h1 class="mb-4 text-center text-4xl font-extrabold leading-none tracking-tight md:text-5xl lg:text-6xl text-white">
+                <h1 class="mb-4 text-center text-2xl font-extrabold leading-none tracking-tight md:text-3xl lg:text-4xl text-white">
                     <span class="text-primary-500">Public</span> Rooms.
                 </h1>
 

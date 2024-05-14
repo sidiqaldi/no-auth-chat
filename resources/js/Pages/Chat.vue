@@ -68,8 +68,6 @@ const form = useForm({
     message: ''
 })
 
-const chatScrollEnable = ref(false);
-
 const sendMessage = () => {
     if (form.message) {
         axios.post(route('chat.send'), {
@@ -82,6 +80,8 @@ const sendMessage = () => {
 }
 
 onMounted(() => {
+    console.log(props.room.name);
+
     Echo.join(`rooms.${props.room.name}`)
         .here((users) => {
             console.log(users);
@@ -90,6 +90,8 @@ onMounted(() => {
             console.log(user);
         })
         .listen('.incoming.message', function (e) {
+            console.log(e)
+
             messages.value.push(e)
 
             messages.value = [...messages.value];
@@ -114,7 +116,7 @@ onMounted(() => {
     <div class="relative min-h-screen flex flex-col items-center justify-center">
         <div class="relative w-full min-h-screen max-h-screen max-w-2xl mx-auto p-6">
 
-            <div class="absolute left-6 right-6 bottom-6 top-6 p-6 pb-16 border rounded-lg shadow  bg-gray-800 border-gray-700 overflow-scroll">
+            <div class="absolute left-6 right-6 bottom-6 top-6 p-6 pb-16 border rounded-lg shadow  bg-gray-800 border-gray-700 overflow-y-auto">
                 <DynamicScroller
                     ref="scroller"
                     :items="messages"

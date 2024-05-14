@@ -12,7 +12,7 @@ class RoomManager
 
     public function __construct()
     {
-        $this->rooms = Cache::get('rooms', []);
+        $this->rooms = Cache::get('rooms', collect());
 
         $this->validate();
     }
