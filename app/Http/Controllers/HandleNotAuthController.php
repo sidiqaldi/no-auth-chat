@@ -32,4 +32,11 @@ class HandleNotAuthController extends Controller
 
         return to_route('rooms');
     }
+
+    public function destroy(Request $request, $any = 1): RedirectResponse
+    {
+        $request->session()->flush();
+
+        return to_route('setup.index');
+    }
 }

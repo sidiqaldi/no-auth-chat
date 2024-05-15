@@ -16,5 +16,5 @@ Route::middleware(HandleInertiaRequests::class)->group(function() {
         Route::post('/chat', ChatController::class)->name('chat.send');
     });
 
-    Route::resource('/setup', HandleNotAuthController::class)->only('index', 'store');
+    Route::resource('/setup', HandleNotAuthController::class)->only('index', 'store', 'destroy');
 });
