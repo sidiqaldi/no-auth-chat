@@ -1,6 +1,6 @@
 <script setup>
 import { ref, computed, onMounted } from 'vue';
-import { Head, Link, router, useForm, usePage } from '@inertiajs/vue3';
+import { Head, router, useForm, usePage } from '@inertiajs/vue3';
 import axios from 'axios';
 
 import ChatBubble from '@/Components/ChatBubble.vue'
@@ -83,6 +83,12 @@ const scrollToBottom = () => {
         chatWindow.scrollTop = chatWindow.scrollHeight;
     }, 400);
 }
+
+const leave = () => {
+    Echo.leave(`rooms.${props.room.name}`)
+
+    router.visit(route('rooms'));
+}
 </script>
 
 <template>
@@ -93,11 +99,11 @@ const scrollToBottom = () => {
         <nav class="fixed top-0 start-0 w-full z-20 bg-gray-800 border-gray-700 shadow-md">
             <div class="max-w-screen-sm flex flex-wrap items-center justify-between mx-auto p-4">
                 <div class="flex items-center space-x-3 rtl:space-x-reverse">
-                    <Link :href="route('rooms')" class="inline">
+                    <button @click.prevent="leave" class="inline">
                         <svg class="w-6 h-6 text-white" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24">
                             <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 12h14M5 12l4-4m-4 4 4 4"/>
                         </svg>
-                    </Link>
+                    </button>
                     <button data-modal-target="default-modal" data-modal-toggle="default-modal" class="self-center text-2xl font-semibold whitespace-nowrap text-primary-500">{{ props.room.name }}</button>
                 </div>
             </div>
