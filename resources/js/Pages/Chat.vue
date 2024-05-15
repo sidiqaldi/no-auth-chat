@@ -165,7 +165,14 @@ const scrollToBottom = () => {
                         <div class="relative w-full">
                             <div class="absolute inset-y-0 start-0 flex items-center ps-3 pointer-events-none">
                             </div>
-                            <input type="text" v-model="form.message" id="simple-search" class="input-text" placeholder="Type message..." />
+                            <input
+                                type="text"
+                                v-model="form.message"
+                                id="simple-search"
+                                class="input-text"
+                                placeholder="Type message..."
+                                aria-autocomplete="both" aria-haspopup="false" autocapitalize="off" autocomplete="off" autocorrect="off" autofocus="" spellcheck="false"
+                            />
                         </div>
                         <button type="submit" class="p-2.5 ms-2 text-sm button-primary">
                             Send
