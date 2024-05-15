@@ -1,6 +1,6 @@
 <script setup>
 import { ref, computed, onMounted } from 'vue';
-import { Head, Link, useForm, usePage } from '@inertiajs/vue3';
+import { Head, Link, router, useForm, usePage } from '@inertiajs/vue3';
 import axios from 'axios';
 
 import ChatBubble from '@/Components/ChatBubble.vue'
@@ -39,11 +39,15 @@ const form = useForm({
 
 const sendMessage = () => {
     if (form.message) {
+        let message = form.message;
+
+        form.reset();
+
         axios.post(route('chat.send'), {
             room: props.room.name,
-            message: form.message,
-        }).finally(() => {
-            form.reset();
+            message: message,
+        }).catch((err) => {
+            router.visit(route('rooms'))
         });
     }
 }
